@@ -56,7 +56,7 @@ class EtfDataFetcher(Scrappy):
 
                 cards = req.json()
                 etf_data = cards['etfs'][0]
-                with open(OUT_DIR / f'{isin}-data.json', mode='w') as f:
+                with open(ETFS_OUT_DIR / f'{isin}-data.json', mode='w') as f:
                     json.dump(etf_data, f)
 
                 print("Values...", end='')
@@ -71,7 +71,7 @@ class EtfDataFetcher(Scrappy):
                     print("Error!")
                     continue
                 values_data = req.json()
-                with open(OUT_DIR / f'{isin}-values.json', mode='w') as f:
+                with open(ETFS_OUT_DIR / f'{isin}-values.json', mode='w') as f:
                     json.dump(values_data, f)
                 print("Done!")
                 time.sleep(SLEEP_TIME * random.uniform(1, 3))

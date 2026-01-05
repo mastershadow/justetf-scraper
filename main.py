@@ -1,4 +1,5 @@
 from etf_data import EtfDataFetcher
+from etf_data_processor import EtfDataProcessor
 from etf_list import EtfList
 from settings import *
 
@@ -12,4 +13,5 @@ if __name__ == "__main__":
         edf = EtfDataFetcher(FETCH_ALL_ETFS_DATA)
         edf.run()
     if PROCESS_ETFS_DATA:
-        pass
+        processor = EtfDataProcessor()
+        processor.run()
