@@ -26,8 +26,24 @@ class EtfDataProcessor:
             with open(ETFS_OUT_DIR / values_file, 'r') as f:
                 values = json.load(f)
 
+            if not data['active']:
+                print(f"Skipping {isin} as active is false...")
+                continue
+
             output = {
-                'isin': isin
+                'isin': isin,
+                'name': data['name'],
+                'ter': data['ter']['raw'],
+                'quote': data['quote']['raw'],
+                'latestQuote': data['latestQuote']['raw'],
+                'latestQuoteDate': data['latestQuoteDate'],
+                'previousQuoteDate': data['previousQuoteDate'],
+                'firstQuoteDate': data['firstQuoteDate'],
+                'returns': data['returns']['raw'] if 'returns' in data and data['returns'] is not None else None,
+                'fundSize': data['fundSize']['raw'] if 'fundSize' in data and data['fundSize'] is not None else None,
+                'url': f"https://www.justetf.com/it/etf-profile.html?isin={isin}",
+                'values' : [[v['date'], v['value']['raw']] for v in values['series']]
             }
+
             with open(AGGREGATED_DIR / f"{isin}.json", 'w') as f:
                 json.dump(output, f, indent=2)
